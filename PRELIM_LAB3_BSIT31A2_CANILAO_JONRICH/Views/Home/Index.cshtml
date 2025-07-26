@@ -1,0 +1,72 @@
+﻿@using PRELIM_LAB3_BSIT31A2_CANILAO_JONRICH.Models
+@{
+    ViewData["Title"] = "Home Page";
+ 
+    List<Customer> customers = new List<Customer>();
+ 
+    // Add 5 normal Customers
+    customers.Add(new Customer { firstname = "John", middlename = "A.", lastname = "Doe", birthday = new DateTime(1990, 1, 1), CustomerID = "C001" });
+    customers.Add(new Customer { firstname = "Jane", middlename = "B.", lastname = "Smith", birthday = new DateTime(1985, 5, 20), CustomerID = "C002" });
+    customers.Add(new Customer { firstname = "Bob", middlename = "C.", lastname = "Brown", birthday = new DateTime(1970, 7, 15), CustomerID = "C003" });
+    customers.Add(new Customer { firstname = "Alice", middlename = "D.", lastname = "Johnson", birthday = new DateTime(2000, 12, 10), CustomerID = "C004" });
+    customers.Add(new Customer { firstname = "Tom", middlename = "E.", lastname = "Williams", birthday = new DateTime(1995, 9, 25), CustomerID = "C005" });
+ 
+    // Add 5 VIP Customers
+    customers.Add(new VipCustomers { firstname = "VIP1", middlename = "F.", lastname = "Lee", birthday = new DateTime(1988, 3, 11), CustomerID = "V001" });
+    customers.Add(new VipCustomers { firstname = "VIP2", middlename = "G.", lastname = "Kim", birthday = new DateTime(1992, 6, 22), CustomerID = "V002" });
+    customers.Add(new VipCustomers { firstname = "VIP3", middlename = "H.", lastname = "Chen", birthday = new DateTime(1983, 11, 30), CustomerID = "V003" });
+    customers.Add(new VipCustomers { firstname = "VIP4", middlename = "I.", lastname = "Patel", birthday = new DateTime(1978, 4, 5), CustomerID = "V004" });
+    customers.Add(new VipCustomers { firstname = "VIP5", middlename = "J.", lastname = "Garcia", birthday = new DateTime(1999, 8, 18), CustomerID = "V005" });
+ 
+    // Separate lists for easier table display
+    var normalCustomers = customers.OfType<Customer>().Where(c => !(c is VipCustomers)).ToList();
+    var vipCustomers = customers.OfType<VipCustomers>().ToList();
+}
+<div class="container mt-4">
+ 
+    <h2>Normal Customers</h2>
+<table class="table table-striped table-bordered">
+<thead class="table-dark">
+<tr>
+<th>Customer ID</th>
+<th>Full Name</th>
+<th>Age</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+            @foreach (var customer in normalCustomers)
+            {
+<tr>
+<td>@customer.CustomerID</td>
+<td>@customer.FullName()</td>
+<td>@customer.GetAge()</td>
+<td>@customer.Describe()</td>
+</tr>
+            }
+</tbody>
+</table>
+ 
+    <h2>VIP Customers</h2>
+<table class="table table-striped table-bordered">
+<thead class="table-warning">
+<tr>
+<th>VIP Customer ID</th>
+<th>Full Name</th>
+<th>Age</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+            @foreach (var vip in vipCustomers)
+            {
+<tr>
+<td>@vip.CustomerID</td>
+<td>@vip.FullName()</td>
+<td>@vip.GetAge()</td>
+<td>@vip.Describe()</td>
+</tr>
+            }
+</tbody>
+</table>
+</div>
